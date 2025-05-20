@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用户管理系统</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {primary: '#3b82f6', secondary: '#64748b', accent: '#0ea5e9',neutral: '#f1f5f9',success: '#10b981', error: '#ef4444',},
+          fontFamily: {inter: ['Inter', 'system-ui', 'sans-serif'],},
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .card-shadow {
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      }
+      .input-focus {
+        @apply focus:ring-2 focus:ring-primary/50 focus:border-primary transition duration-200;
+      }
+      .btn-hover {
+        @apply hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200;
+      }
+    }
+  </style>
+</head>
+<body class="font-inter bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex items-center justify-center p-4">
+<div class="max-w-4xl w-full mx-auto">
+  <!-- 标题区域 -->
+  <div class="text-center mb-10">
+    <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent mb-2">
+      用户管理系统
+    </h1>
+    <p class="text-secondary text-lg">安全便捷的账户管理解决方案</p>
+  </div>
+
+  <!-- 主卡片 -->
+  <div class="bg-white rounded-2xl card-shadow overflow-hidden flex flex-col md:flex-row">
+    <!-- 左侧装饰 -->
+    <div class="hidden md:flex md:w-2/5 bg-gradient-to-br from-primary to-accent p-8 items-center justify-center">
+      <div class="text-white text-center">
+        <div class="text-[100px] mb-6">
+          <i class="fa-solid fa-user-circle"></i>
+        </div>
+        <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold mb-4">安全可靠</h2>
+        <p class="text-white/80">我们采用先进的加密技术，保障您的账户安全</p>
+      </div>
+    </div>
+
+    <!-- 右侧表单 -->
+    <div class="md:w-3/5 p-8 md:p-12">
+      <!-- 标签切换 -->
+      <div class="flex mb-8">
+        <button id="login-tab" class="flex-1 py-3 font-medium text-lg border-b-2 border-primary text-primary">
+          登录
+        </button>
+        <button id="register-tab" class="flex-1 py-3 font-medium text-lg border-b-2 border-transparent text-secondary hover:text-primary transition-colors">
+          注册
+        </button>
+      </div>
+
+      <!-- 登录表单 -->
+      <div id="login-form" class="space-y-6">
+        <div>
+          <label for="login-username" class="block text-sm font-medium text-gray-700 mb-1">用户名</label>
+          <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                                <i class="fa-solid fa-user"></i>
+                            </span>
+            <input type="text" id="login-username" class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 input-focus" placeholder="请输入用户名">
+          </div>
+        </div>
+
+        <div>
+          <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">密码</label>
+          <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+            <input type="password" id="login-password" class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 input-focus" placeholder="请输入密码">
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <input type="checkbox" id="remember-me" class="h-4 w-4 text-primary rounded border-gray-300 focus:ring-primary">
+            <label for="remember-me" class="ml-2 block text-sm text-gray-700">记住我</label>
+          </div>
+          <a href="#" class="text-sm text-primary hover:text-primary/80 transition-colors">忘记密码?</a>
+        </div>
+
+        <button id="login-btn" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg btn-hover flex items-center justify-center">
+          <span>登录</span>
+          <i class="fa-solid fa-arrow-right ml-2"></i>
+        </button>
+
+        <div class="text-center text-gray-500">
+          或者使用以下方式登录
+        </div>
+
+        <div class="flex space-x-4">
+          <button class="flex-1 bg-[#1877f2] hover:bg-[#1877f2]/90 text-white py-2 rounded-lg btn-hover">
+            <i class="fa-brands fa-facebook"></i>
+          </button>
+          <button class="flex-1 bg-[#ea4335] hover:bg-[#ea4335]/90 text-white py-2 rounded-lg btn-hover">
+            <i class="fa-brands fa-google"></i>
+          </button>
+          <button class="flex-1 bg-[#25d366] hover:bg-[#25d366]/90 text-white py-2 rounded-lg btn-hover">
+            <i class="fa-brands fa-whatsapp"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 注册表单 -->
+      <div id="register-form" class="space-y-6 hidden">
+        <div>
+          <label for="register-username" class="block text-sm font-medium text-gray-700 mb-1">用户名</label>
+          <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                                <i class="fa-solid fa-user-plus"></i>
+                            </span>
+            <input type="text" id="register-username" class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 input-focus" placeholder="请输入用户名">
+          </div>
+        </div>
+
+        <div>
+          <label for="register-email" class="block text-sm font-medium text-gray-700 mb-1">邮箱</label>
+          <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                                <i class="fa-solid fa-envelope"></i>
+                            </span>
+            <input type="email" id="register-email" class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 input-focus" placeholder="请输入邮箱">
+          </div>
+        </div>
+
+        <div>
+          <label for="register-password" class="block text-sm font-medium text-gray-700 mb-1">密码</label>
+          <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+            <input type="password" id="register-password" class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 input-focus" placeholder="请输入密码">
+          </div>
+        </div>
+
+        <div>
+          <label for="register-confirm-password" class="block text-sm font-medium text-gray-700 mb-1">确认密码</label>
+          <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+            <input type="password" id="register-confirm-password" class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 input-focus" placeholder="请再次输入密码">
+          </div>
+        </div>
+
+        <div class="flex items-center">
+          <input type="checkbox" id="terms" class="h-4 w-4 text-primary rounded border-gray-300 focus:ring-primary">
+          <label for="terms" class="ml-2 block text-sm text-gray-700">我同意<a href="#" class="text-primary hover:text-primary/80 transition-colors">服务条款</a>和<a href="#" class="text-primary hover:text-primary/80 transition-colors">隐私政策</a></label>
+        </div>
+
+        <button id="register-btn" class="w-full bg-accent hover:bg-accent/90 text-white font-medium py-3 px-4 rounded-lg btn-hover flex items-center justify-center">
+          <i class="fa-solid fa-user-plus mr-2"></i>
+          <span>注册</span>
+        </button>
+      </div>
+
+      <!-- 消息提示框 -->
+      <div id="message-box" class="mt-6 p-4 rounded-lg hidden">
+        <div class="flex items-center">
+          <i id="message-icon" class="mr-3 text-xl"></i>
+          <p id="message-text"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 页脚 -->
+  <div class="text-center mt-8 text-gray-500 text-sm">
+    &copy; 2025 用户管理系统 - 版权所有
+  </div>
+</div>
+
+<script>
+  // 标签切换功能
+  document.getElementById('login-tab').addEventListener('click', function() {
+    document.getElementById('login-tab').classList.add('border-primary', 'text-primary');
+    document.getElementById('login-tab').classList.remove('border-transparent', 'text-secondary');
+    document.getElementById('register-tab').classList.add('border-transparent', 'text-secondary');
+    document.getElementById('register-tab').classList.remove('border-primary', 'text-primary');
+    document.getElementById('login-form').classList.remove('hidden');
+    document.getElementById('register-form').classList.add('hidden');
+    hideMessage();
+  });
+
+  document.getElementById('register-tab').addEventListener('click', function() {
+    document.getElementById('register-tab').classList.add('border-primary', 'text-primary');
+    document.getElementById('register-tab').classList.remove('border-transparent', 'text-secondary');
+    document.getElementById('login-tab').classList.add('border-transparent', 'text-secondary');
+    document.getElementById('login-tab').classList.remove('border-primary', 'text-primary');
+    document.getElementById('register-form').classList.remove('hidden');
+    document.getElementById('login-form').classList.add('hidden');
+    hideMessage();
+  });
+
+  // 登录按钮点击事件
+  document.getElementById('login-btn').addEventListener('click', function() {
+    const username = document.getElementById('login-username').value;
+    const password = document.getElementById('login-password').value;
+
+    // 这里应该调用后端API进行验证，现在使用模拟数据
+    if (username && password) {
+      // 模拟登录成功
+      showMessage('success', '登录成功，欢迎回来！');
+
+      // 3秒后跳转到主页（实际应用中应该是后端返回登录成功后跳转）
+      setTimeout(() => {
+        window.location.href = '#dashboard';
+      }, 2000);
+    } else {
+      showMessage('error', '用户名和密码不能为空！');
+    }
+  });
+
+  // 注册按钮点击事件
+  document.getElementById('register-btn').addEventListener('click', function() {
+    const username = document.getElementById('register-username').value;
+    const email = document.getElementById('register-email').value;
+    const password = document.getElementById('register-password').value;
+    const confirmPassword = document.getElementById('register-confirm-password').value;
+    const terms = document.getElementById('terms').checked;
+
+    // 简单验证
+    if (!username || !email || !password || !confirmPassword) {
+      showMessage('error', '所有字段都是必填项！');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      showMessage('error', '两次输入的密码不一致！');
+      return;
+    }
+
+    if (!terms) {
+      showMessage('error', '请同意服务条款和隐私政策！');
+      return;
+    }
+
+    // 模拟注册成功
+    showMessage('success', '注册成功，请登录！');
+
+    // 2秒后切换到登录页面
+    setTimeout(() => {
+      document.getElementById('login-tab').click();
+      // 清空注册表单
+      document.getElementById('register-username').value = '';
+      document.getElementById('register-email').value = '';
+      document.getElementById('register-password').value = '';
+      document.getElementById('register-confirm-password').value = '';
+      document.getElementById('terms').checked = false;
+    }, 2000);
+  });
+
+  // 显示消息提示
+  function showMessage(type, message) {
+    const messageBox = document.getElementById('message-box');
+    const messageText = document.getElementById('message-text');
+    const messageIcon = document.getElementById('message-icon');
+
+    // 移除之前的所有类
+    messageBox.classList.remove('bg-success/10', 'border-success', 'text-success', 'bg-error/10', 'border-error', 'text-error');
+    messageIcon.classList.remove('fa-check-circle', 'fa-exclamation-circle');
+
+    // 设置新的类
+    if (type === 'success') {
+      messageBox.classList.add('bg-success/10', 'border-success', 'text-success');
+      messageIcon.classList.add('fa-check-circle');
+    } else {
+      messageBox.classList.add('bg-error/10', 'border-error', 'text-error');
+      messageIcon.classList.add('fa-exclamation-circle');
+    }
+
+    messageText.textContent = message;
+    messageBox.classList.remove('hidden');
+
+    // 添加动画效果
+    messageBox.classList.add('animate-fadeIn');
+  }
+
+  // 隐藏消息提示
+  function hideMessage() {
+    document.getElementById('message-box').classList.add('hidden');
+  }
+
+  // 添加动画效果
+  document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(-10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                .animate-fadeIn {
+                    animation: fadeIn 0.3s ease-out forwards;
+                }
+            </style>
+        `);
+
+  // 添加表单输入框动画效果
+  document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('focus', function() {
+      this.parentElement.classList.add('scale-105');
+      this.parentElement.style.transition = 'all 0.2s ease';
+    });
+
+    input.addEventListener('blur', function() {
+      this.parentElement.classList.remove('scale-105');
+    });
+  });
+</script>
+</body>
+</html>
